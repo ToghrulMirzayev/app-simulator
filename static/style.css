@@ -119,3 +119,10 @@ body.dark-theme .status-form button {
 body.dark-theme .status-form button:hover {
   background-color: #3498db;
 }
+
+.status-form button:disabled {
+  background-color: darkblue;
+  color: white;
+  cursor: not-allowed;
+  opacity: 0.6;
+}

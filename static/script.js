@@ -1,5 +1,7 @@
 document.addEventListener("DOMContentLoaded", async function () {
   const statusValue = document.getElementById("status-value");
+  const statusInput = document.getElementById("status-input");
+  const updateButton = document.querySelector("button");
 
   async function fetchStatus() {
     try {
@@ -25,12 +27,24 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
   }
 
+  async function fetchUpdateEnabled() {
+    try {
+      const response = await fetch("/api/update-enabled");
+      const data = await response.json();
+      const isUpdateEnabled = data.is_update_enabled;
+      statusInput.disabled = !isUpdateEnabled;
+      updateButton.disabled = !isUpdateEnabled;
+    } catch (error) {
+      console.error("Failed to fetch update enabled status:", error);
+    }
+  }
+
   await fetchStatus();
+  await fetchUpdateEnabled();
 
   window.updateStatus = async function () {
-    const statusInput = document.getElementById("status-input").value;
-
-    const status = parseInt(statusInput, 10);
+    const statusInputValue = statusInput.value;
+    const status = parseInt(statusInputValue, 10);
 
     if (isNaN(status)) {
       console.error("Invalid input");

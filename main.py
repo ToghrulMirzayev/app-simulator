@@ -25,6 +25,21 @@ def get_status_from_db():
     connection.close()
     return status_value
 
+def get_update_enabled_from_db():
+    connection = psycopg2.connect(
+        dbname="postgres",
+        user="postgres",
+        password="postgres",
+        host="db",
+        port="5432"
+    )
+    cursor = connection.cursor()
+    cursor.execute("SELECT is_update_enabled FROM config LIMIT 1;")
+    is_update_enabled = cursor.fetchone()[0]
+    cursor.close()
+    connection.close()
+    return is_update_enabled
+
 def update_status_in_db(new_status_value: int):
     connection = psycopg2.connect(
         dbname="postgres",
@@ -44,7 +59,8 @@ class StatusUpdate(BaseModel):
 
 @app.get("/")
 async def read_root(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request})
+    is_update_enabled = get_update_enabled_from_db()
+    return templates.TemplateResponse("index.html", {"request": request, "is_update_enabled": is_update_enabled})
 
 @app.get("/api/status")
 async def get_status():
@@ -56,6 +72,11 @@ async def get_status():
     else:
         status = "BAD"
     return JSONResponse({"status": status})
+
+@app.get("/api/update-enabled")
+async def get_update_enabled():
+    is_update_enabled = get_update_enabled_from_db()
+    return JSONResponse({"is_update_enabled": is_update_enabled})
 
 @app.post("/api/status")
 async def update_status(status_update: StatusUpdate):
