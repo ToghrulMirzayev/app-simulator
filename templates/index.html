@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Status Page</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="container">
+    <div class="theme-switcher">
+      <label for="theme-toggle">Dark/Light</label>
+      <input type="checkbox" id="theme-toggle" />
+    </div>
+
+    <h1>System Status</h1>
+    <p id="status-text">Status: <span id="status-value">Loading...</span></p>
+
+    <div class="status-form">
+      <label for="status-input">Enter a value:</label>
+      <input type="number" id="status-input" placeholder="Enter a value" />
+      <button onclick="updateStatus()">Update</button>
+    </div>
+  </div>
+
+  <script src="/static/script.js"></script>
+</body>
+</html>

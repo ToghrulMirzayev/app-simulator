@@ -1,0 +1,121 @@
+body {
+  background-color: #fafafa;
+  font-family: "Open Sans", sans-serif;
+  color: #444;
+  transition: all 0.3s ease-in-out;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 20px;
+}
+
+h1 {
+  font-size: 36px;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #3a21ab;
+  text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease-in-out;
+}
+
+.theme-switcher {
+  margin-bottom: 20px;
+}
+
+.theme-switcher input {
+  width: 40px;
+  height: 20px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+#status-text {
+  color: grey;
+  font-size: 24px;
+  margin-top: 20px;
+}
+
+#status-value.healthy {
+  color: green !important;
+}
+
+#status-value.warning {
+  color: orange !important;
+}
+
+#status-value.bad {
+  color: red !important;
+}
+
+.status-form {
+  margin-top: 20px;
+}
+
+.status-form input[type="number"] {
+  padding: 8px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  outline: none;
+  background-color: #f8f8f8;
+  transition: all 0.3s ease-in-out;
+}
+
+.status-form button {
+  padding: 8px 16px;
+  font-size: 16px;
+  background-color: #2980b9;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-left: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.status-form button:hover {
+  background-color: #3498db;
+}
+
+body.dark-theme {
+  background-color: #2c3e50;
+  color: #ecf0f1;
+}
+
+body.dark-theme h1 {
+  color: #ecf0f1;
+  text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-theme #status-text {
+  color: #bdc3c7;
+}
+
+body.dark-theme #status-value.healthy {
+  color: #27ae60;
+}
+
+body.dark-theme #status-value.warning {
+  color: #f39c12;
+}
+
+body.dark-theme #status-value.bad {
+  color: #e74c3c;
+}
+
+body.dark-theme .status-form input[type="number"] {
+  background-color: #34495e;
+  color: #ecf0f1;
+}
+
+body.dark-theme .status-form button {
+  background-color: #2980b9;
+  color: #fff;
+}
+
+body.dark-theme .status-form button:hover {
+  background-color: #3498db;
+}
