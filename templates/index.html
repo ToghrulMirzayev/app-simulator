@@ -18,7 +18,7 @@
 
     <div class="status-form">
       <label for="status-input">Enter a value:</label>
-      <input type="number" id="status-input" placeholder="Enter a value" disabled />
+      <input type="number" id="status-input" placeholder="" disabled />
       <button onclick="updateStatus()" disabled>Update</button>
     </div>
   </div>
@@ -29,5 +29,9 @@
     document.getElementById('status-input').disabled = !isUpdateEnabled;
     document.querySelector('button').disabled = !isUpdateEnabled;
   </script>
+
+  <footer>
+    <p>&copy; 2024 Toghrul Mirzayev</p>
+  </footer>
 </body>
 </html>

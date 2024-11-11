@@ -9,3 +9,9 @@ docker-compose up --build -d
 ```
 docker-compose down
 ```
+
+# Open URL
+http://localhost:8000/
+
+# Preview
+![alt text](image.png)
