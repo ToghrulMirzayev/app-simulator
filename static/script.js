@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   const statusValue = document.getElementById("status-value");
   const statusInput = document.getElementById("status-input");
   const updateButton = document.querySelector("button");
+  const phraseText = document.getElementById("phrase-text");
 
   async function fetchStatus() {
     try {
@@ -39,8 +40,19 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
   }
 
+  async function fetchNewPhrase() {
+    try {
+      const response = await fetch("/api/phrase-of-the-day");
+      const data = await response.json();
+      phraseText.innerText = data.phrase_of_the_day;
+    } catch (error) {
+      console.error("Failed to fetch phrase of the day:", error);
+    }
+  }
+
   await fetchStatus();
   await fetchUpdateEnabled();
+  await fetchNewPhrase();
 
   window.updateStatus = async function () {
     const statusInputValue = statusInput.value;
