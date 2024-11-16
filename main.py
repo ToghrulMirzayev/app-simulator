@@ -2,8 +2,9 @@ from fastapi import FastAPI, Request
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
-from starlette.responses import JSONResponse
+from starlette.responses import JSONResponse, PlainTextResponse
 import psycopg2
+import logging
 
 app = FastAPI(
     title="App Simulator",
@@ -13,6 +14,8 @@ app = FastAPI(
 
 templates = Jinja2Templates(directory="templates")
 app.mount("/static", StaticFiles(directory="static"), name="static")
+
+logging.basicConfig(filename='app.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 def get_status_from_db():
     connection = psycopg2.connect(
@@ -100,13 +103,23 @@ def update_status_in_db(new_status_value: int):
 class StatusUpdate(BaseModel):
     status: int
 
+@app.get("/logs", response_class=PlainTextResponse)
+async def get_logs():
+    """
+    Get logs
+    """
+    with open('app.log', 'r') as log_file:
+        logs = log_file.read()
+    return logs
+
 @app.get("/", response_class=JSONResponse)
 async def read_root(request: Request):
     """
-    Root endpoint that returns the html
+    Root element, returns html
     """
     is_update_enabled = get_update_enabled_from_db()
     phrase_of_the_day = get_phrase_of_the_day_from_db()
+    logging.info("Root endpoint accessed.")
     return templates.TemplateResponse("index.html", {
         "request": request,
         "is_update_enabled": is_update_enabled,
@@ -138,10 +151,11 @@ async def get_update_enabled():
 @app.post("/api/status", response_model=dict)
 async def update_status(status_update: StatusUpdate):
     """
-    Update the status value in the database.
+    Update status in the database
     """
     new_status_value = status_update.status
     update_status_in_db(new_status_value)
+    logging.info(f"Status updated to {new_status_value}.")
     return JSONResponse({"message": "Status updated successfully"})
 
 @app.get("/api/phrase-of-the-day", response_model=dict)
