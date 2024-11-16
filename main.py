@@ -5,7 +5,11 @@ from pydantic import BaseModel
 from starlette.responses import JSONResponse
 import psycopg2
 
-app = FastAPI()
+app = FastAPI(
+    title="App Simulator",
+    description="App Simulator documentation.",
+    version="1.0.0"
+)
 
 templates = Jinja2Templates(directory="templates")
 app.mount("/static", StaticFiles(directory="static"), name="static")
@@ -76,7 +80,7 @@ def get_phrase_of_the_day_from_db():
     connection.close()
     
     if result is None:
-        return "Нет доступных фраз."
+        return "Oh no... What a bad day. There is not a single phrase available today :("
     return result[0]
 
 def update_status_in_db(new_status_value: int):
@@ -96,8 +100,11 @@ def update_status_in_db(new_status_value: int):
 class StatusUpdate(BaseModel):
     status: int
 
-@app.get("/")
+@app.get("/", response_class=JSONResponse)
 async def read_root(request: Request):
+    """
+    Root endpoint that returns the html
+    """
     is_update_enabled = get_update_enabled_from_db()
     phrase_of_the_day = get_phrase_of_the_day_from_db()
     return templates.TemplateResponse("index.html", {
@@ -106,8 +113,11 @@ async def read_root(request: Request):
         "phrase_of_the_day": phrase_of_the_day
     })
 
-@app.get("/api/status")
+@app.get("/api/status", response_model=dict)
 async def get_status():
+    """
+    Get the current status based on the status value from the database.
+    """
     status_value = get_status_from_db()
     if status_value > 80:
         status = "HEALTHY"
@@ -117,18 +127,27 @@ async def get_status():
         status = "BAD"
     return JSONResponse({"status": status})
 
-@app.get("/api/update-enabled")
+@app.get("/api/update-enabled", response_model=dict)
 async def get_update_enabled():
+    """
+    Check if updates are enabled.
+    """
     is_update_enabled = get_update_enabled_from_db()
     return JSONResponse({"is_update_enabled": is_update_enabled})
 
-@app.post("/api/status")
+@app.post("/api/status", response_model=dict)
 async def update_status(status_update: StatusUpdate):
+    """
+    Update the status value in the database.
+    """
     new_status_value = status_update.status
     update_status_in_db(new_status_value)
     return JSONResponse({"message": "Status updated successfully"})
 
-@app.get("/api/phrase-of-the-day")
+@app.get("/api/phrase-of-the-day", response_model=dict)
 async def get_phrase_of_the_day():
+    """
+    Get a random phrase of the day based on the language configuration.
+    """
     phrase = get_phrase_of_the_day_from_db()
     return JSONResponse({"phrase_of_the_day": phrase})

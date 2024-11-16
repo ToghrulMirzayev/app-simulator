@@ -21,4 +21,4 @@ CREATE TABLE IF NOT EXISTS language_config (
     language VARCHAR(2) NOT NULL
 );
 
-INSERT INTO language_config (language) VALUES ('RU');
+INSERT INTO language_config (language) VALUES ('EN');
