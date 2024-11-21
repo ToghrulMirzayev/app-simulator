@@ -57,7 +57,7 @@ kubectl port-forward pod/<app pod> 8000:8000
 
 ![alt text](files/logs.png)
 
-## 🛢 **Database schema**
+## 🗄️ **Database schema**
 
 * Table `config`
 - `id`: SERIAL, PRIMARY KEY
