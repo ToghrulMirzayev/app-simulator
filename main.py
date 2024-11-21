@@ -22,7 +22,7 @@ def get_status_from_db():
         dbname="postgres",
         user="postgres",
         password="postgres",
-        host="db",
+        host="postgres-service",
         port="5432"
     )
     cursor = connection.cursor()
@@ -37,7 +37,7 @@ def get_update_enabled_from_db():
         dbname="postgres",
         user="postgres",
         password="postgres",
-        host="db",
+        host="postgres-service",
         port="5432"
     )
     cursor = connection.cursor()
@@ -52,7 +52,7 @@ def get_language_from_db():
         dbname="postgres",
         user="postgres",
         password="postgres",
-        host="db",
+        host="postgres-service",
         port="5432"
     )
     cursor = connection.cursor()
@@ -68,7 +68,7 @@ def get_phrase_of_the_day_from_db():
         dbname="postgres",
         user="postgres",
         password="postgres",
-        host="db",
+        host="postgres-service",
         port="5432"
     )
     cursor = connection.cursor()
@@ -91,7 +91,7 @@ def update_status_in_db(new_status_value: int):
         dbname="postgres",
         user="postgres",
         password="postgres",
-        host="db",
+        host="postgres-service",
         port="5432"
     )
     cursor = connection.cursor()
